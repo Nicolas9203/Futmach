@@ -57,7 +57,7 @@ main{flex:1;width:100%;display:flex;align-items:center;justify-content:center;mi
 </head>
 <body>
 <header>
-  <h1>Futmatch <span>· v21 en celular</span></h1>
+  <h1>Futmatch <span>· v22 en celular</span></h1>
   <div class="controls" role="group" aria-label="Dispositivo">
     <button data-dev="iphone" aria-pressed="true">iPhone 15 · 393×852</button>
     <button data-dev="android" aria-pressed="false">Android · 412×915</button>
@@ -74,7 +74,7 @@ main{flex:1;width:100%;display:flex;align-items:center;justify-content:center;mi
       <span class="btn-side" style="right:-4px;top:220px;height:96px"></span>
       <div class="screen">
         <div class="island"></div>
-        <iframe id="app" title="Futmatch v21" srcdoc="&lt;!doctype html&gt;
+        <iframe id="app" title="Futmatch v22" srcdoc="&lt;!doctype html&gt;
 &lt;html lang=&quot;es&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;utf-8&quot;&gt;
@@ -1142,15 +1142,7 @@ input[type=range]{width:100%;height:44px;accent-color:var(--fm-green-600);cursor
               &lt;button onClick=&quot;{{ openRules }}&quot; class=&quot;btn btn-t&quot; style=&quot;margin-left:-12px;&quot;&gt;Reglas de cancelación e inasistencia&lt;/button&gt;
             &lt;/div&gt;
 
-            &lt;sc-if value=&quot;{{ detNotJoined }}&quot; hint-placeholder-val=&quot;{{ true }}&quot;&gt;
-              &lt;button onClick=&quot;{{ toggleCommitAttend }}&quot; role=&quot;checkbox&quot; aria-checked=&quot;{{ commitAttend }}&quot; class=&quot;fm-panel&quot; style=&quot;margin-top:12px;display:flex;align-items:center;gap:12px;width:100%;text-align:left;&quot;&gt;
-                &lt;span style=&quot;width:44px;height:26px;border-radius:14px;position:relative;display:block;flex-shrink:0;background:{{ commitTrack }};border:2px solid {{ commitBorder }};&quot;&gt;&lt;span style=&quot;position:absolute;top:50%;left:{{ commitKnobLeft }}px;width:16px;height:16px;margin-top:-8px;border-radius:50%;background:{{ commitKnobBg }};transition:left .15s ease;&quot;&gt;&lt;/span&gt;&lt;/span&gt;
-                &lt;span style=&quot;flex:1;&quot;&gt;
-                  &lt;span style=&quot;display:block;font-size:14px;font-weight:700;&quot;&gt;Confirmo que voy a asistir si me aceptan&lt;/span&gt;
-                  &lt;span class=&quot;mut&quot; style=&quot;display:block;font-size:12.5px;margin-top:2px;line-height:1.4;&quot;&gt;Te avisamos 3 horas antes. Si algo cambia, puedes cancelar desde Agenda con anticipación.&lt;/span&gt;
-                &lt;/span&gt;
-              &lt;/button&gt;
-            &lt;/sc-if&gt;
+            &lt;!-- v22: la confirmación de asistencia pasó a la barra inferior, junto a Pedir cupo --&gt;
 
             &lt;sc-if value=&quot;{{ detJoined }}&quot; hint-placeholder-val=&quot;{{ false }}&quot;&gt;
               &lt;div style=&quot;margin-top:12px;&quot;&gt;
@@ -1165,7 +1157,11 @@ input[type=range]{width:100%;height:44px;accent-color:var(--fm-green-600);cursor
     &lt;div class=&quot;fm-bar&quot;&gt;
       &lt;div class=&quot;fm-container fm-narrow&quot;&gt;
         &lt;sc-if value=&quot;{{ detNotJoined }}&quot; hint-placeholder-val=&quot;{{ true }}&quot;&gt;
-          &lt;button onClick=&quot;{{ doJoin }}&quot; disabled=&quot;{{ busyJoin }}&quot; style=&quot;opacity:{{ joinBtnOpacity }};&quot; class=&quot;btn btn-p&quot;&gt;{{ joinLabel }}&lt;/button&gt;
+          &lt;button onClick=&quot;{{ toggleCommitAttend }}&quot; role=&quot;checkbox&quot; aria-checked=&quot;{{ commitAttend }}&quot; style=&quot;display:flex;align-items:center;gap:10px;width:100%;min-height:44px;padding:4px 2px 8px;text-align:left;background:none;border:0;&quot;&gt;
+            &lt;svg aria-hidden=&quot;true&quot; class=&quot;ic&quot; style=&quot;font-size:24px;flex-shrink:0;color:{{ commitMarkColor }};&quot;&gt;&lt;use href=&quot;#i-{{ commitMark }}&quot;&gt;&lt;/use&gt;&lt;/svg&gt;
+            &lt;span style=&quot;font-size:14px;font-weight:600;line-height:1.35;&quot;&gt;Confirmo que voy a asistir si me aceptan&lt;/span&gt;
+          &lt;/button&gt;
+          &lt;button onClick=&quot;{{ doJoin }}&quot; disabled=&quot;{{ busyJoin }}&quot; class=&quot;btn btn-p&quot;&gt;{{ joinLabel }}&lt;/button&gt;
         &lt;/sc-if&gt;
         &lt;sc-if value=&quot;{{ detJoined }}&quot; hint-placeholder-val=&quot;{{ false }}&quot;&gt;
           &lt;button onClick=&quot;{{ openShare }}&quot; class=&quot;btn btn-p&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; class=&quot;ic&quot; style=&quot;font-size:20px;&quot;&gt;&lt;use href=&quot;#i-person_add&quot;&gt;&lt;/use&gt;&lt;/svg&gt;Invitar jugadores&lt;/button&gt;
@@ -1412,7 +1408,7 @@ input[type=range]{width:100%;height:44px;accent-color:var(--fm-green-600);cursor
     &lt;/div&gt;
     &lt;div class=&quot;fm-bar&quot;&gt;
       &lt;div class=&quot;fm-container fm-narrow&quot;&gt;
-        &lt;button onClick=&quot;{{ go.pay }}&quot; class=&quot;btn btn-p&quot;&gt;Pagar mi parte&lt;/button&gt;
+        &lt;button onClick=&quot;{{ goPayHost }}&quot; class=&quot;btn btn-p&quot;&gt;Pagar mi parte&lt;/button&gt;
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/section&gt;
@@ -1450,16 +1446,15 @@ input[type=range]{width:100%;height:44px;accent-color:var(--fm-green-600);cursor
         &lt;svg aria-hidden=&quot;true&quot; class=&quot;ic&quot; style=&quot;font-size:24px;color:#4B5563;&quot;&gt;&lt;use href=&quot;#i-chevron_right&quot;&gt;&lt;/use&gt;&lt;/svg&gt;
       &lt;/button&gt;
 
-      &lt;div class=&quot;row&quot; style=&quot;justify-content:space-between;gap:12px;&quot;&gt;
+      &lt;sc-if value=&quot;{{ payShowCupos }}&quot; hint-placeholder-val=&quot;{{ true }}&quot;&gt;
+      &lt;div class=&quot;row&quot; style=&quot;gap:12px;align-items:flex-start;&quot;&gt;
+        &lt;svg aria-hidden=&quot;true&quot; class=&quot;ic&quot; style=&quot;font-size:22px;color:#008042;flex-shrink:0;margin-top:2px;&quot;&gt;&lt;use href=&quot;#i-check_circle&quot;&gt;&lt;/use&gt;&lt;/svg&gt;
         &lt;div style=&quot;flex:1;&quot;&gt;
-          &lt;h2 class=&quot;h3&quot; style=&quot;font-weight:700;&quot;&gt;Cupos&lt;/h2&gt;
-          &lt;div class=&quot;mut&quot; style=&quot;margin-top:2px;&quot;&gt;{{ familia }} para tu familia, {{ habitual }} para tu grupo.&lt;/div&gt;
-          &lt;sc-if value=&quot;{{ splitPending }}&quot; hint-placeholder-val=&quot;{{ true }}&quot;&gt;
-            &lt;p style=&quot;line-height:1.5;margin-top:6px;color:{{ splitGateColor }};font-weight:{{ splitGateWeight }};&quot;&gt;{{ splitGateTitle }}&lt;/p&gt;
-          &lt;/sc-if&gt;
+          &lt;h2 class=&quot;h3&quot; style=&quot;font-weight:700;&quot;&gt;Cupos confirmados&lt;/h2&gt;
+          &lt;div class=&quot;mut&quot; style=&quot;margin-top:2px;&quot;&gt;{{ familia }} para tu familia, {{ habitual }} para tu grupo. Los cambias desde Tu equipo.&lt;/div&gt;
         &lt;/div&gt;
-        &lt;button onClick=&quot;{{ openSplit }}&quot; aria-label=&quot;{{ splitCta }} el reparto de cupos entre familia y grupo habitual&quot; class=&quot;btn btn-t&quot; style=&quot;flex-shrink:0;&quot;&gt;{{ splitCta }}&lt;/button&gt;
       &lt;/div&gt;
+      &lt;/sc-if&gt;
 
       &lt;button onClick=&quot;{{ openCover }}&quot; class=&quot;btn btn-t&quot; style=&quot;margin-left:-12px;&quot;&gt;Ver qué cubre el reembolso&lt;/button&gt;
       &lt;button onClick=&quot;{{ openRules }}&quot; class=&quot;btn btn-t&quot; style=&quot;margin-left:-12px;&quot;&gt;Reglas de cancelación e inasistencia&lt;/button&gt;
@@ -1479,7 +1474,7 @@ input[type=range]{width:100%;height:44px;accent-color:var(--fm-green-600);cursor
       &lt;/button&gt;
       &lt;button onClick=&quot;{{ doPay }}&quot; disabled=&quot;{{ payDisabled }}&quot; class=&quot;btn btn-p&quot; style=&quot;margin-top:10px;&quot;&gt;{{ payLabel }}&lt;/button&gt;
       &lt;sc-if value=&quot;{{ splitPending }}&quot; hint-placeholder-val=&quot;{{ true }}&quot;&gt;
-        &lt;p class=&quot;mut&quot; style=&quot;text-align:center;margin-top:8px;font-size:13px;&quot;&gt;Confirma los cupos para poder pagar.&lt;/p&gt;
+        &lt;p class=&quot;mut&quot; style=&quot;text-align:center;margin-top:8px;font-size:13px;&quot;&gt;Antes de cobrarte te pedimos confirmar los cupos.&lt;/p&gt;
       &lt;/sc-if&gt;
       &lt;sc-if value=&quot;{{ splitClear }}&quot; hint-placeholder-val=&quot;{{ true }}&quot;&gt;
         &lt;p class=&quot;mut&quot; style=&quot;text-align:center;margin-top:8px;font-size:13px;&quot;&gt;Cancela gratis hasta 24 h antes.&lt;/p&gt;
@@ -1946,12 +1941,24 @@ input[type=range]{width:100%;height:44px;accent-color:var(--fm-green-600);cursor
     &lt;/div&gt;
   &lt;/sc-if&gt;
 
+  &lt;sc-if value=&quot;{{ sheetCommit }}&quot; hint-placeholder-val=&quot;{{ false }}&quot;&gt;
+    &lt;div onClick=&quot;{{ closeSheetBg }}&quot; data-sheet=&quot;1&quot; class=&quot;sheetbg&quot;&gt;
+      &lt;div class=&quot;sheet&quot; role=&quot;dialog&quot; aria-modal=&quot;true&quot; aria-label=&quot;Confirma tu asistencia&quot;&gt;
+        &lt;div class=&quot;grab&quot;&gt;&lt;/div&gt;
+        &lt;h2 style=&quot;font-size:22px;line-height:28px;font-weight:700;&quot;&gt;¿Vas a asistir si te aceptan?&lt;/h2&gt;
+        &lt;p class=&quot;mut&quot; style=&quot;line-height:1.5;margin-top:8px;&quot;&gt;El organizador arma el equipo con quienes confirman. Te avisamos 3 horas antes y, si algo cambia, puedes cancelar desde Agenda con anticipación.&lt;/p&gt;
+        &lt;button onClick=&quot;{{ confirmCommitJoin }}&quot; class=&quot;btn btn-p&quot; style=&quot;margin-top:16px;&quot;&gt;Sí, voy. Pedir cupo&lt;/button&gt;
+        &lt;button onClick=&quot;{{ closeSheet }}&quot; class=&quot;btn btn-t&quot; style=&quot;width:100%;color:#4B5563;&quot;&gt;Todavía no&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/sc-if&gt;
+
   &lt;sc-if value=&quot;{{ sheetSplit }}&quot; hint-placeholder-val=&quot;{{ false }}&quot;&gt;
     &lt;div onClick=&quot;{{ closeSheetBg }}&quot; data-sheet=&quot;1&quot; class=&quot;sheetbg&quot;&gt;
       &lt;div class=&quot;sheet&quot; role=&quot;dialog&quot; aria-modal=&quot;true&quot; aria-label=&quot;Repartir los 10 cupos&quot;&gt;
         &lt;div class=&quot;grab&quot;&gt;&lt;/div&gt;
         &lt;h2 style=&quot;font-size:22px;line-height:28px;font-weight:700;&quot;&gt;Repartir los 10 cupos&lt;/h2&gt;
-        &lt;p class=&quot;mut&quot; style=&quot;line-height:1.5;margin-top:8px;&quot;&gt;Guarda los cupos de tu familia antes de invitar. Después de pagar, cambiarlos obliga a sacar a alguien.&lt;/p&gt;
+        &lt;p class=&quot;mut&quot; style=&quot;line-height:1.5;margin-top:8px;&quot;&gt;{{ splitIntro }}&lt;/p&gt;
 
         &lt;div style=&quot;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;border-top:1px solid rgba(13,27,42,.14);margin-top:16px;&quot;&gt;
           &lt;span class=&quot;h3&quot;&gt;Familia e invitados&lt;/span&gt;
@@ -1987,7 +1994,7 @@ input[type=range]{width:100%;height:44px;accent-color:var(--fm-green-600);cursor
           &lt;/sc-for&gt;
         &lt;/div&gt;
         &lt;p class=&quot;mut&quot; style=&quot;line-height:1.5;margin-top:12px;&quot;&gt;Tu grupo es de 8 jugadores, así que con {{ habitual }} cupos {{ splitVerdict }}&lt;/p&gt;
-        &lt;button onClick=&quot;{{ confirmSplit }}&quot; class=&quot;btn btn-p&quot; style=&quot;margin-top:16px;&quot;&gt;Confirmar cupos&lt;/button&gt;
+        &lt;button onClick=&quot;{{ confirmSplit }}&quot; class=&quot;btn btn-p&quot; style=&quot;margin-top:16px;&quot;&gt;{{ splitConfirmLabel }}&lt;/button&gt;
         &lt;button onClick=&quot;{{ closeSheet }}&quot; class=&quot;btn btn-t&quot; style=&quot;width:100%;color:#4B5563;&quot;&gt;Cerrar&lt;/button&gt;
       &lt;/div&gt;
     &lt;/div&gt;
@@ -2238,7 +2245,7 @@ input[type=range]{width:100%;height:44px;accent-color:var(--fm-green-600);cursor
 
 &lt;/div&gt;
 &lt;/x-dc&gt;
-&lt;script type=&quot;text/x-dc&quot; data-dc-script data-props=&#x27;{&quot;$preview&quot;:{&quot;width&quot;:390,&quot;height&quot;:844},&quot;requireSplitConfirm&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Flujo&quot;},&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;splash&quot;,&quot;options&quot;:[&quot;splash&quot;,&quot;welcome&quot;,&quot;signup&quot;,&quot;play&quot;,&quot;search&quot;,&quot;match&quot;,&quot;request&quot;,&quot;create&quot;,&quot;roster&quot;,&quot;pay&quot;,&quot;done&quot;,&quot;agenda&quot;,&quot;court&quot;,&quot;map&quot;,&quot;profile&quot;,&quot;notifs&quot;,&quot;errPay&quot;,&quot;errTime&quot;,&quot;errCourt&quot;],&quot;section&quot;:&quot;Vista inicial&quot;},&quot;startSheet&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;&quot;,&quot;options&quot;:[&quot;&quot;,&quot;invite&quot;,&quot;lineup&quot;,&quot;split&quot;,&quot;tipo&quot;,&quot;payMethod&quot;,&quot;cancel&quot;,&quot;auth&quot;,&quot;filters&quot;,&quot;cover&quot;,&quot;guide&quot;],&quot;section&quot;:&quot;Vista inicial&quot;},&quot;startQuery&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;section&quot;:&quot;Vista inicial&quot;},&quot;startTab&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;partidos&quot;,&quot;options&quot;:[&quot;partidos&quot;,&quot;canchas&quot;],&quot;section&quot;:&quot;Vista inicial&quot;},&quot;startCommunity&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vista inicial&quot;},&quot;startJoined&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vista inicial&quot;},&quot;startAgendaTab&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;organizo&quot;,&quot;options&quot;:[&quot;organizo&quot;,&quot;play&quot;],&quot;section&quot;:&quot;Vista inicial&quot;},&quot;startGuest&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vista inicial&quot;},&quot;holdSplash&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vista inicial&quot;},&quot;startSplitConfirmed&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vista inicial&quot;}}&#x27;&gt;
+&lt;script type=&quot;text/x-dc&quot; data-dc-script data-props=&#x27;{&quot;$preview&quot;:{&quot;width&quot;:390,&quot;height&quot;:844},&quot;requireSplitConfirm&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Flujo&quot;},&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;splash&quot;,&quot;options&quot;:[&quot;splash&quot;,&quot;welcome&quot;,&quot;signup&quot;,&quot;play&quot;,&quot;search&quot;,&quot;match&quot;,&quot;request&quot;,&quot;create&quot;,&quot;roster&quot;,&quot;pay&quot;,&quot;done&quot;,&quot;agenda&quot;,&quot;court&quot;,&quot;map&quot;,&quot;profile&quot;,&quot;notifs&quot;,&quot;errPay&quot;,&quot;errTime&quot;,&quot;errCourt&quot;],&quot;section&quot;:&quot;Vista inicial&quot;},&quot;startSheet&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;&quot;,&quot;options&quot;:[&quot;&quot;,&quot;invite&quot;,&quot;commit&quot;,&quot;lineup&quot;,&quot;split&quot;,&quot;tipo&quot;,&quot;payMethod&quot;,&quot;cancel&quot;,&quot;auth&quot;,&quot;filters&quot;,&quot;cover&quot;,&quot;guide&quot;],&quot;section&quot;:&quot;Vista inicial&quot;},&quot;startQuery&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;section&quot;:&quot;Vista inicial&quot;},&quot;startTab&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;partidos&quot;,&quot;options&quot;:[&quot;partidos&quot;,&quot;canchas&quot;],&quot;section&quot;:&quot;Vista inicial&quot;},&quot;startCommunity&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vista inicial&quot;},&quot;startJoined&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vista inicial&quot;},&quot;startAgendaTab&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;organizo&quot;,&quot;options&quot;:[&quot;organizo&quot;,&quot;play&quot;],&quot;section&quot;:&quot;Vista inicial&quot;},&quot;startGuest&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vista inicial&quot;},&quot;holdSplash&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vista inicial&quot;},&quot;startSplitConfirmed&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vista inicial&quot;}}&#x27;&gt;
 
 class Component extends DCLogic {
   state = {
@@ -2311,7 +2318,7 @@ class Component extends DCLogic {
   /* ---------- ciclo de vida ---------- */
   componentDidMount() {
     this._t = setInterval(() =&gt; {
-      if (this.state.screen === &#x27;pay&#x27;) { if (this.state.lock &gt; 1) this.setState(s =&gt; ({ lock: s.lock - 1 })); else this.setState({ lock: 0, screen: &#x27;errTime&#x27;, sheet: null }); }
+      if (this.state.screen === &#x27;pay&#x27; &amp;&amp; !this.state.sheet) { if (this.state.lock &gt; 1) this.setState(s =&gt; ({ lock: s.lock - 1 })); else this.setState({ lock: 0, screen: &#x27;errTime&#x27;, sheet: null }); }
     }, 1000);
     let P = this.props;
     try { /* enlaces directos opcionales: #screen=pay&amp;sheet=payMethod&amp;guest=1 */
@@ -2603,6 +2610,10 @@ class Component extends DCLogic {
     this.setState(s =&gt; ({ reminded: true, notifRead: Object.assign({}, s.notifRead, { n2: true }) }));
     this.toast(&#x27;Le enviamos un recordatorio de pago a Andrés Peña.&#x27;);
   }
+  join() {
+    if (!this.state.authed) { this.setState({ sheet: &#x27;auth&#x27;, pending: { join: true }, gateReason: this.reasonFor(&#x27;join&#x27;) }); return; }
+    this.busy(&#x27;join&#x27;, () =&gt; this.nav(&#x27;request&#x27;));
+  }
   askLeave(kind, id) { this.setState({ sheet: &#x27;cancel&#x27;, leave: { kind, id } }); }
   payFromAgenda() {
     this.setState({ role: &#x27;guest&#x27;, sel: 0, match: this.sabMatch(), screen: &#x27;pay&#x27;, sheet: null, lock: 300, extended: false, prev: &#x27;agenda&#x27; });
@@ -2717,7 +2728,7 @@ class Component extends DCLogic {
     const fuera = Math.max(0, 8 - (10 - s.familia));
     const parte = s.match.parteNum != null ? s.match.parteNum : Math.round(s.match.cancheNum / 10);
     const confNow = isG ? s.match.conf : s.conf;
-    const gateOn = (P.requireSplitConfirm ?? true) &amp;&amp; !s.splitOk;
+    const gateOn = !isG &amp;&amp; (P.requireSplitConfirm ?? true) &amp;&amp; !s.splitOk;
     const faltanHost = libres === 0 ? &#x27;Ya están los 10 cupos asignados.&#x27; : libres === 1 ? &#x27;Te falta 1 jugador y quedan 48 horas.&#x27; : &#x27;Te faltan &#x27; + libres + &#x27; jugadores y quedan 48 horas.&#x27;;
     const payMs = this.payMethodsData();
     const pmSel = payMs.find(x =&gt; x.id === s.payMethod) || payMs[0];
@@ -2969,7 +2980,7 @@ class Component extends DCLogic {
       splitCta: s.splitOk ? &#x27;Cambiar&#x27; : &#x27;Revisar&#x27;,
       familia: s.familia, habitual: s.habitual, splitOk: s.splitOk, splitPending: gateOn, splitClear: !gateOn,
       famPlus: () =&gt; this.setSplit(1), famMinus: () =&gt; this.setSplit(-1),
-      confirmSplit: () =&gt; { this.setState({ splitOk: true, sheet: null }); this.toast(&#x27;Cupos confirmados.&#x27;); },
+      confirmSplit: () =&gt; { const thenPay = this.state.splitThenPay; this.setState({ splitOk: true, sheet: null, splitThenPay: false }); this.toast(&#x27;Cupos confirmados.&#x27;); if (thenPay &amp;&amp; this.state.screen !== &#x27;pay&#x27;) this.nav(&#x27;pay&#x27;); },
       openSplit: () =&gt; this.setState({ sheet: &#x27;split&#x27; }), sheetSplit: s.sheet === &#x27;split&#x27;,
       famList, hasFamList: famList.length &gt; 0, groupList, groupCountLabel: groupCnt + &#x27; de 8 con cupo&#x27;,
 
@@ -3001,18 +3012,26 @@ class Component extends DCLogic {
       payLabel: s.busy === &#x27;pay&#x27; ? &#x27;Procesando…&#x27; : &#x27;Pagar &#x27; + this.money(parte),
       bookLabel: s.busy === &#x27;book&#x27; ? &#x27;Reservando…&#x27; : &#x27;Reservar y armar equipo&#x27;,
       busyJoin: s.busy === &#x27;join&#x27;, busyBook: s.busy === &#x27;book&#x27;,
-      payDisabled: gateOn || s.busy === &#x27;pay&#x27;,
+      payDisabled: s.busy === &#x27;pay&#x27;,
+      payShowCupos: !isG &amp;&amp; !gateOn,
+      splitThenPay: !!s.splitThenPay,
+      splitIntro: s.splitThenPay ? &#x27;Antes de pagar, confirma quién ocupa los 10 cupos. Después de pagar, cambiarlos obliga a sacar a alguien.&#x27; : &#x27;Guarda los cupos de tu familia antes de invitar. Después de pagar, cambiarlos obliga a sacar a alguien.&#x27;,
+      splitConfirmLabel: s.splitThenPay ? &#x27;Confirmar cupos y pagar&#x27; : &#x27;Confirmar cupos&#x27;,
+      goPayHost: () =&gt; { if (gateOn) { this.setState({ sheet: &#x27;split&#x27;, splitThenPay: true }); return; } this.nav(&#x27;pay&#x27;); },
       commitAttend: s.commitAttend,
       toggleCommitAttend: () =&gt; this.setState(z =&gt; ({ commitAttend: !z.commitAttend })),
       commitTrack: s.commitAttend ? &#x27;#008042&#x27; : &#x27;#E2E8E5&#x27;, commitBorder: s.commitAttend ? &#x27;#008042&#x27; : &#x27;rgba(13,27,42,.22)&#x27;,
       commitKnobLeft: s.commitAttend ? 24 : 2, commitKnobBg: &#x27;#FFFFFF&#x27;,
       joinBtnOpacity: s.commitAttend ? 1 : 0.55,
       doJoin: () =&gt; {
-        if (!s.commitAttend) { this.toast(&#x27;Confirma que vas a asistir para pedir el cupo.&#x27;); return; }
-        if (!s.authed) { this.setState({ sheet: &#x27;auth&#x27;, pending: { join: true }, gateReason: this.reasonFor(&#x27;join&#x27;) }); return; }
-        this.busy(&#x27;join&#x27;, () =&gt; this.nav(&#x27;request&#x27;));
+        if (!s.commitAttend) { this.setState({ sheet: &#x27;commit&#x27; }); return; }
+        this.join();
       },
-      doPay: () =&gt; this.busy(&#x27;pay&#x27;, () =&gt; {
+      sheetCommit: s.sheet === &#x27;commit&#x27;,
+      confirmCommitJoin: () =&gt; { this.setState({ commitAttend: true, sheet: null }); this.join(); },
+      commitMark: s.commitAttend ? &#x27;check_box&#x27; : &#x27;check_box_outline_blank&#x27;,
+      commitMarkColor: s.commitAttend ? &#x27;#008042&#x27; : &#x27;#4B5563&#x27;,
+      doPay: () =&gt; { if (gateOn) { this.setState({ sheet: &#x27;split&#x27;, splitThenPay: true }); return; } this.busy(&#x27;pay&#x27;, () =&gt; {
         const st = this.state;
         if (st.payMethod === &#x27;pse&#x27; &amp;&amp; !st.pseFailed) { this.setState({ pseFailed: true }); this.nav(&#x27;errPay&#x27;); return; }
         if (st.role === &#x27;guest&#x27;) {
@@ -3020,7 +3039,7 @@ class Component extends DCLogic {
           else this.setState(z =&gt; ({ joined: z.joined.includes(z.sel) ? z.joined : z.joined.concat(z.sel) }));
         }
         this.nav(&#x27;done&#x27;);
-      }),
+      }); },
       slot1Free: !s.slotGone, slot1Gone: s.slotGone,
       bookSlot1: () =&gt; { if (!s.slotGone) { this.setState({ slotGone: true }); this.nav(&#x27;errCourt&#x27;, true); return; } },
       reHold: () =&gt; this.setState({ screen: &#x27;pay&#x27;, lock: 300, extended: false, sheet: null }),
@@ -3100,8 +3119,8 @@ class Component extends DCLogic {
       /* hojas comunes */
       sheetCover: s.sheet === &#x27;cover&#x27;, sheetGuide: s.sheet === &#x27;guide&#x27;, sheetTipo: s.sheet === &#x27;tipo&#x27;,
       openGuide: () =&gt; this.setState({ sheet: &#x27;guide&#x27; }), openCover: () =&gt; this.setState({ sheet: &#x27;cover&#x27; }),
-      closeSheet: () =&gt; this.setState({ sheet: null }),
-      closeSheetBg: e =&gt; { if (e.target.dataset &amp;&amp; e.target.dataset.sheet) this.setState({ sheet: null }); },
+      closeSheet: () =&gt; this.setState({ sheet: null, splitThenPay: false }),
+      closeSheetBg: e =&gt; { if (e.target.dataset &amp;&amp; e.target.dataset.sheet) this.setState({ sheet: null, splitThenPay: false }); },
       toastOn: !!s.toast, toastTitle: s.toast &amp;&amp; s.toast.title,
       toastHasAction: !!(s.toast &amp;&amp; s.toast.actionLabel), toastActionLabel: s.toast &amp;&amp; s.toast.actionLabel, toastAction: s.toast &amp;&amp; s.toast.action,
       hideToast: () =&gt; this.setState({ toast: null })
@@ -3147,7 +3166,7 @@ class Component extends DCLogic {
     });
   });
   document.getElementById('reload').addEventListener('click',function(){
-    var f=document.getElementById('app'); var d=f.getAttribute('srcdoc'); f.removeAttribute('srcdoc'); f.setAttribute('srcdoc',d);
+    var f=document.getElementById('app'); var x=f.getAttribute('srcdoc'); f.removeAttribute('srcdoc'); f.setAttribute('srcdoc',x);
   });
   window.addEventListener('resize',fit);
   fit();
